@@ -1,0 +1,32 @@
+!partition = @ { !self = $$; !f = $$; !lis = $$;
+  {CASE:
+    { ! [] = lis; $CASE: -> [[], []] };
+    ! x::xs = lis;
+    ! [lis1, lis2] = self f xs;
+    {IF:
+      { ? f x; $IF: -> [x::lis1, lis2] };
+      [lis1, x::lis2]
+    }
+  }
+};
+
+!append' = @ { !self = $$; !lis = $$;
+  {CASE:
+    { ! [] = lis; $CASE: -> $APPEND: k -> k };
+    ! x::xs = lis; x :: self xs
+  }
+};
+
+!append = { !lis = $$; {APPEND: append' lis } };
+
+!qsort = @ { !self = $$; !lis = $$;
+  {CASE:
+    { ! [] = lis; $CASE: -> [] };
+    ! key::rest = lis;
+    ! [lis1, lis2] = partition {$$<key} rest;
+    append (self lis1) (key :: self lis2)
+  }
+};
+
+println (qsort [3, 1, 4, 1, 5, 9, 2]);
+

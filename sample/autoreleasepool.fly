@@ -1,0 +1,42 @@
+(* Objective-C の @autoreleasepool っぽいリソース管理機構 *)
+
+(* ライブラリ側 *)
+
+!autoreleasepool = { !f = $$; 
+  {POOL: !_ = f [] } []
+};
+
+!create = { !id = $$;
+  $POOL: k -> { !pool = $$; k [] (id::pool)}
+};
+
+!map = @ { !self = $$; !f = $$; !lis = $$;
+  {CASE:
+    { ![] = lis; $CASE: -> [] };
+    { !x::xs = lis; f x :: self f xs }
+  }
+};
+
+!return = { !v = $$;
+  $POOL: -> {
+    !pool = $$;
+    map { write $$; writeln " released"} pool;
+    v }
+};
+
+(* ユーザ側 *)
+
+println (autoreleasepool { !_ = $$;
+  !res1 = create "file1";
+  writeln "file1 allocated";
+  
+  !res2 = create "file2";
+  writeln "file2 allocated";
+  
+  writeln "exit failure";
+  return 1;
+
+  println "exit success";
+  return 0;
+});
+
