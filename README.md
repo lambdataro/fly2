@@ -9,9 +9,9 @@ $ ./fly2 test.fly
 hello, world.
 ```
 ## チュートリアル
-# Fly2 チュートリアル [#cb3b3c36]
+# Fly2 チュートリアル
 
-## hello, world. [#p48c9793]
+## hello, world.
 
 以下は画面に `hello, world.` と表示して改行する Fly2 プログラムです．
 
