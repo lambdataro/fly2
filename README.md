@@ -283,7 +283,7 @@ println (map {$$*2} [1,2,3]);
 [2, 4, 6]
 ```
 ### リストのプレフィックス
-[[浅井先生と亀山先生の論文:http://logic.cs.tsukuba.ac.jp/~kam/papers/aplas07.pdf]]に載っている例．
+[浅井先生と亀山先生の論文](http://logic.cs.tsukuba.ac.jp/~kam/papers/aplas07.pdf)に載っている例．
 
 ```
 !prefix = { !lst = $$;
