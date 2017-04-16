@@ -1,8 +1,9 @@
 (*==================================================*
- * eval.ml - Fly 2.0
- * Naoki Takashima
+ * eval.ml - Fly 2.1
+ * 2017/04/17 @lambdataro
  *==================================================*)
 
+open Error
 open Syntax
 open Prim
 
@@ -31,7 +32,6 @@ let rec inner_tag = function
   | [] -> failwith "can't happen"
   | Tag p :: _ -> p
   | _ :: tr -> inner_tag tr
- 
 
 (* 評価 *)
 let rec eval expr env cont trail =
@@ -140,12 +140,9 @@ let init_env =
     ("__prim_neg", PRIM1 Neg);
     ("__prim_is_num", PRIM1 IsNum);
     ("__prim_is_list", PRIM1 IsList);
-    ("__prim_put", PRIM1 Put);
-    ("__prim_get", PRIM1 Get);
     ("__prim_to_str", PRIM1 ToStr);
     ("__prim_write", PRIM1 Write);
     ("__prim_floor", PRIM1 Floor);
-    ("__prim_flush", PRIM1 Flush);
     ("__prim_add", PRIM2 Add);
     ("__prim_sub", PRIM2 Sub);
     ("__prim_mul", PRIM2 Mul);
@@ -158,4 +155,3 @@ let init_env =
 (* 評価の開始 *)
 let start_eval e =
   eval e init_env null_cont []
-

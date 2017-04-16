@@ -1,8 +1,10 @@
 (*==================================================*
- * lexer.mll - Fly 2.0
- * Naoki Takashima
+ * lexer.mll - Fly 2.1
+ * 2017/04/17 @lambdataro
  *==================================================*)
+
 {
+open Error
 open Lexing
 open Syntax
 open Parser
@@ -11,7 +13,6 @@ let buf = Buffer.create 40
 let reset () = Buffer.clear buf
 let add c = Buffer.add_char buf c
 let get () = Buffer.contents buf
-
 }
 
 let digit = ['0'-'9']
@@ -81,4 +82,3 @@ and comment = parse
   | '\n'            { new_line lexbuf; comment lexbuf }
   | eof             { errorf lexbuf.lex_curr_p "コメントが閉じていない" }
   | _               { comment lexbuf }
-

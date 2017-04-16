@@ -1,6 +1,6 @@
 (*==================================================*
- * syntax.ml - Fly 2.0
- * Naoki Takashima
+ * syntax.ml - Fly 2.1
+ * 2017/04/17 @lambdataro
  *==================================================*)
 
 (* 位置情報 *)
@@ -46,8 +46,7 @@ type value =
 (* 1引数プリミティブ *)
 and prim1_id =
   | Neg | IsNum | IsList
-  | Put | Get | ToStr | Write
-  | Floor | Flush
+  | ToStr | Write | Floor
 
 (* 2引数プリミティブ *)
 and prim2_id =
@@ -62,19 +61,3 @@ and trail = trail_item list
 and trail_item =
   | Tag of string
   | Cont of cont
-
-(* エラーメッセージを表示して終了 *)
-let errorf pos fmt =
-  let open Printf in
-  ksprintf (fun str ->
-    if pos = Lexing.dummy_pos then
-      eprintf "エラー: %s\n"
-        str
-    else
-      eprintf "エラー %s(%d): %s\n"
-        pos.Lexing.pos_fname
-        pos.Lexing.pos_lnum
-        str;
-    exit 1) fmt
-
-

@@ -1,8 +1,10 @@
 /*==================================================*
- * parser.mly - Fly 2.0
- * Naoki Takashima
+ * parser.mly - Fly 2.1
+ * 2017/04/17 @lambdataro
  *==================================================*/
+
 %{
+open Error
 open Syntax
 
 (* 位置情報を取得 *)
@@ -209,4 +211,3 @@ pat_list:
   | pat_list COM pat
     { $3 :: $1 }
 ;
-
