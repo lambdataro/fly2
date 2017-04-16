@@ -1,8 +1,9 @@
-(*========================================*
- * Fly 2.0 標準ライブラリ
- * Naoki Takashima
- *========================================*)
+(*==================================================*
+ * stdlib.ml - Fly 2.1
+ * 2017/04/17 @lambdataro
+ *==================================================*)
 
+let stdlib_string = {code|
 (* 数値演算子 *)
 !__op_neg = __prim_neg;
 !__op_add = __prim_add;
@@ -37,13 +38,10 @@
 (* 入出力 *)
 !write = __prim_write;
 !writeln = { write $$; write "\n" };
-!put = __prim_put;
-!get = __prim_get;
 !print = { write (to_str $$) };
 !println = { writeln (to_str $$) };
-!flush = __prim_flush;
 
 (* 型判定 *)
 !is_list = __prim_is_list;
 !is_num = __prim_is_num;
-
+|code};

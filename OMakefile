@@ -1,0 +1,31 @@
+.PHONY: browser clean
+
+NATIVE_ENABLED = false
+BYTE_ENABLED = true
+
+USE_OCAMLFIND = true
+
+FILES[] =
+	global
+	error
+	syntax
+	parser
+	lexer
+	prim
+	eval
+	stdlib
+
+.DEFAULT: $(OCamlProgram fly2, $(array $(FILES) command_main))
+
+OCAMLPACKS[] =
+	js_of_ocaml
+
+OCAML_BYTE_LINK_FLAGS = -linkpkg
+
+browser: $(OCamlProgram fly2-browser, $(FILES) browser_main)
+
+clean:
+	rm -f fly2 fly2.run fly2-browser fly2-browser.run \
+		lexer.ml parser.mli parser.ml \
+		*.cmi *.cmo *.omc
+		

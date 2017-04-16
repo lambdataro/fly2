@@ -7,3 +7,9 @@
 *.cmx
 *.cmxs
 *.cmxa
+.omakedb*
+*.omc
+fly2*
+parser.mli
+parser.ml
+lexer.ml

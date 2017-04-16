@@ -1,8 +1,9 @@
 (*==================================================*
- * prim.ml - Fly 2.0
- * Naoki Takashima
+ * prim.ml - Fly 2.1
+ * 2017/04/17 @lambdataro
  *==================================================*)
 
+open Error
 open Syntax
 open Printf
 
@@ -59,25 +60,6 @@ let eval_is_list _ = function
   | LIST _ -> true_val
   | _ -> false_val
 
-(* 1文字出力 *)
-let eval_put pos = function
-  | NUM n ->
-    let i = int_of_float n in
-    if i >= 0 && i <= 255 then
-      begin
-        output_char stdout (char_of_int i);
-        NUM n
-      end
-    else
-      errorf pos "文字コードが範囲外: put"
-  | _ -> errorf pos "型エラー: put"
-
-(* 1文字入力 *)
-let eval_get pos = function
-  | _ ->
-    let c = input_char stdin in
-    NUM (float (int_of_char c))
-
 (* 文字列化 *)
 let eval_to_str pos = function
   | v ->
@@ -86,7 +68,7 @@ let eval_to_str pos = function
 (* 文字列の表示 *)
 let eval_write pos = function
   | LIST vs ->
-    print_string (string_of_list pos vs);
+    Global.print (string_of_list pos vs);
     LIST vs
   | _ -> errorf pos "型エラー: write"
 
@@ -95,10 +77,6 @@ let eval_floor pos = function
   | NUM v -> NUM (floor v)
   | _ -> errorf pos "型エラー: floor"
 
-(* 出力のフラッシュ *)
-let eval_flush pos = function
-  | _ -> flush stdout; NUM 0.0
-
 (* 1引数プリミティブの評価 *)
 let eval_prim1 pos op v =
   let f =
@@ -106,12 +84,9 @@ let eval_prim1 pos op v =
     | Neg -> eval_neg
     | IsNum -> eval_is_num
     | IsList -> eval_is_list
-    | Put -> eval_put
-    | Get -> eval_get
     | ToStr -> eval_to_str
     | Write -> eval_write
     | Floor -> eval_floor
-    | Flush -> eval_flush
   in
   f pos v
 
@@ -195,4 +170,3 @@ let eval_prim2 pos op v1 v2 =
     | Cons -> eval_cons
   in
   f pos v1 v2
-
