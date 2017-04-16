@@ -1,7 +1,7 @@
 # fly2
 fly2 は限定継続をベースにしたスクリプト言語です。
 
-[オンライン版](http://lambdataro.github.io/fly2) はこちら。
+[オンライン版](http://lambdataro.github.io/fly2)を使うとブラウザで試せます。
 
 ## コマンド版ビルド方法
 ocaml 4.04.0 と omake 0.10.2 をインストールして
